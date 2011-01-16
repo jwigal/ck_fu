@@ -5,7 +5,7 @@ module Forge38
     content_tag :div, :id => 'ck_fu', :class => Rails.environment do
       text = "Env: #{Rails.environment.titlecase}"
       text += " #{separator} Current DB: #{ActiveRecord::Base.connection.current_database}" if ActiveRecord::Base.connection.respond_to?(:current_database)
-      text += " #{separator} Current DB: #{ActiveRecord::Base::configurations[RAILS_ENV]['dbfile']}" if ActiveRecord::Base::configurations[RAILS_ENV]['adapter'] == 'sqlite3'
+      text += " #{separator} Current DB: #{ActiveRecord::Base::configurations[Rails.environment]['dbfile']}" if ActiveRecord::Base::configurations[Rails.environment]['adapter'] == 'sqlite3'
       text += " #{separator} Revision: #{deployed_revision}" if deployed_revision.present? && (options[:revision].nil? || options[:revision])
       text += " #{separator} Deployed: #{deployed_date}" if deployed_date.present? && (options[:date].nil? || options[:date])
       (options[:links] || []).each do |link|

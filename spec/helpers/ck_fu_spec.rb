@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 include Forge38
 
 describe Forge38 do
-  it "should return a div with an id of ck_fu and class of RAILS_ENV" do
+  it "should return a div with an id of ck_fu and class of Rails.environment" do
     ck_fu.should == '<div class="test" id="ck_fu">Env: Test &sect; Current DB: </div>'
   end
   
@@ -55,14 +55,14 @@ describe Forge38 do
   end
   
   it "should have the current sqlite3 database" do
-    ActiveRecord::Base::configurations[RAILS_ENV]['adapter'] = 'sqlite3'
-    ActiveRecord::Base::configurations[RAILS_ENV]['dbfile'] = 'test.sqlite3'
+    ActiveRecord::Base::configurations[Rails.environment]['adapter'] = 'sqlite3'
+    ActiveRecord::Base::configurations[Rails.environment]['dbfile'] = 'test.sqlite3'
     ck_fu.should == '<div class="test" id="ck_fu">Env: Test &sect; Current DB: test.sqlite3</div>'
   end
   
   it "should have the current non-sqlite3 db" do
     ActiveRecord::Base.connection.stub!(:current_database).and_return('something_test')
-    ActiveRecord::Base::configurations[RAILS_ENV]['adapter'] = 'mysql'
+    ActiveRecord::Base::configurations[Rails.environment]['adapter'] = 'mysql'
     ck_fu.should == '<div class="test" id="ck_fu">Env: Test &sect; Current DB: something_test</div>'
   end
 end
